@@ -1,0 +1,16 @@
+2026-03-08T15:36:48  HTTPS/WSS enabled (SSL certificates found)
+2026-03-08T15:36:48  Starting LAN WebRTC signaling server on port 3000
+2026-03-08T15:36:48  Serving client files from: /home/devisdd/CN_CP/webrtc-lan/client
+2026-03-08T15:36:48  SSL Context: <ssl.SSLContext object at 0x7693c02155d0>
+2026-03-08T15:36:51  CONNECT  P1  (total: 1)
+2026-03-08T15:37:15  127.0.0.1 [08/Mar/2026:15:37:15 +0530] "UNKNOWN / HTTP/1.0" 400 218 "-" "-"
+2026-03-08T15:37:25  127.0.0.1 [08/Mar/2026:15:37:25 +0530] "GET / HTTP/1.1" 200 2296 "-" "curl/8.5.0"
+2026-03-08T15:37:56  192.168.1.8 [08/Mar/2026:15:37:56 +0530] "UNKNOWN / HTTP/1.0" 400 226 "-" "-"
+2026-03-08T15:37:56  192.168.1.8 [08/Mar/2026:15:37:56 +0530] "UNKNOWN / HTTP/1.0" 400 226 "-" "-"
+2026-03-08T15:37:57  192.168.1.8 [08/Mar/2026:15:37:57 +0530] "UNKNOWN / HTTP/1.0" 400 218 "-" "-"
+2026-03-08T15:37:57  192.168.1.8 [08/Mar/2026:15:37:57 +0530] "UNKNOWN / HTTP/1.0" 400 218 "-" "-"
+2026-03-08T15:38:13  127.0.0.1 [08/Mar/2026:15:38:13 +0530] "UNKNOWN / HTTP/1.0" 400 218 "-" "-"
+2026-03-08T15:39:21  DISCONNECT  P1  (total: 0)
+2026-03-08T15:39:21  127.0.0.1 [08/Mar/2026:15:36:51 +0530] "GET /ws HTTP/1.1" 101 0 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:148.0) Gecko/20100101 Firefox/148.0"
+======== Running on http://0.0.0.0:3000 ========
+(Press CTRL+C to quit)

@@ -7,8 +7,8 @@ HOW TO RUN:
   2. Find your local IP:
        Linux/Mac : hostname -I
        Windows   : ipconfig
-  3. On every device connected to the same Wi-Fi open:
-       http://<your-ip>:3000
+   3. On every device connected to the same Wi-Fi open:
+        https://<your-ip>:3000
   4. Click "Call" next to any peer to start audio + chat.
 
 Architecture:
@@ -22,6 +22,7 @@ import json
 import logging
 import mimetypes
 import os
+import ssl
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -70,6 +71,7 @@ async def _broadcast(obj: dict, exclude_id: str | None = None) -> None:
 
 # ── WebSocket handler ─────────────────────────────────────────────────────────
 
+
 async def ws_handler(request: web.Request) -> web.WebSocketResponse:
     ws = web.WebSocketResponse()
     await ws.prepare(request)
@@ -95,7 +97,7 @@ async def ws_handler(request: web.Request) -> web.WebSocketResponse:
                     continue
 
                 mtype = data.get("type", "")
-                to    = data.get("to")
+                to = data.get("to")
                 log.info("MSG  %s → %s  [%s]", peer_id, to or "broadcast", mtype)
 
                 if mtype in ("offer", "answer", "ice-candidate"):
@@ -124,6 +126,7 @@ async def ws_handler(request: web.Request) -> web.WebSocketResponse:
 
 # ── Static file handler ───────────────────────────────────────────────────────
 
+
 async def static_handler(request: web.Request) -> web.Response:
     rel = request.match_info.get("path", "") or "index.html"
     if not rel:
@@ -148,17 +151,35 @@ async def static_handler(request: web.Request) -> web.Response:
 
 # ── App setup ─────────────────────────────────────────────────────────────────
 
+
 def build_app() -> web.Application:
     app = web.Application()
     app.router.add_get("/ws", ws_handler)
-    app.router.add_get("/",          static_handler)
+    app.router.add_get("/", static_handler)
     app.router.add_get("/{path:.+}", static_handler)
     return app
 
 
-# ── Entry point ───────────────────────────────────────────────────────────────
+def _build_ssl_context() -> ssl.SSLContext | None:
+    cert_path = Path(__file__).parent / "cert.pem"
+    key_path = Path(__file__).parent / "key.pem"
+    if cert_path.exists() and key_path.exists():
+        ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        ctx.load_cert_chain(cert_path, key_path)
+        return ctx
+    return None
+
+
+# ── Entry point ─────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    ssl_ctx = _build_ssl_context()
+    if ssl_ctx:
+        log.info("HTTPS/WSS enabled (SSL certificates found)")
+    else:
+        log.info(
+            "HTTP/WS only (no SSL certificates - run generate_cert.py to enable HTTPS)"
+        )
     log.info("Starting LAN WebRTC signaling server on port %d", PORT)
     log.info("Serving client files from: %s", CLIENT_DIR)
-    web.run_app(build_app(), host="0.0.0.0", port=PORT, access_log=log)
+    web.run_app(build_app(), host="0.0.0.0", port=PORT, ssl_context=ssl_ctx, access_log=log)

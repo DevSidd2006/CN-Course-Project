@@ -127,7 +127,7 @@ At startup:
    - Shows warning panel if denied
 
 2. `connectSignaling()`
-   - Connects `ws://<host>:3000/ws`
+   - Connects `wss://<host>:3000/ws`
    - Handles open/message/close/error
    - Auto-reconnects after disconnect (3 seconds)
 
@@ -352,7 +352,7 @@ Tradeoffs:
 3. Get LAN IPv4:
    - `hostname -I`
 4. Open on all devices (same Wi-Fi/LAN):
-   - `http://<LAN-IP>:3000`
+   - `https://<LAN-IP>:3000`
 5. Allow microphone in browser.
 6. Verify participant tiles, notifications, audio, and group chat.
 

@@ -22,12 +22,21 @@ This project is a peer-to-peer audio and text transmission system designed for o
    ```
 
 3. **Connect Devices:**
-   - Note the **LAN Access URL** displayed in the terminal (e.g., `http://192.168.1.10:3000`).
+   - Note the **LAN Access URL** displayed in the terminal (e.g., `https://192.168.1.10:3000`).
    - Open this URL on two devices on the same network.
    - Enter the same **Room ID** and click **Join**.
 
 ## ⚠️ Browser Security (Microphone Access)
-Browsers require **HTTPS** or **localhost** for microphone access. To use this over LAN without HTTPS:
+Browsers require **HTTPS** or **localhost** for microphone access. To enable HTTPS:
+
+1. Generate SSL certificates:
+   ```bash
+   python3 webrtc-lan/server/generate_cert.py
+   ```
+2. Restart the server - it will automatically use HTTPS if certificates exist.
+3. Access via `https://<your-ip>:3000`
+
+To use HTTP without HTTPS, you must use Chrome/Edge with the insecure origin flag:
 1. Open Chrome/Edge and go to `chrome://flags/#unsafely-treat-insecure-origin-as-secure`.
-2. Add your server's IP (e.g., `http://192.168.1.10:5000`).
+2. Add your server's IP (e.g., `http://192.168.1.10:3000`).
 3. Set it to **Enabled** and relaunch.

@@ -70,7 +70,8 @@ muteBtn.addEventListener("click", () => {
 
 function connectSignaling() {
   const host = window.location.hostname;
-  const url = `ws://${host}:3000/ws`;
+  const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+  const url = `${protocol}//${host}:3000/ws`;
 
   ws = new WebSocket(url);
 
