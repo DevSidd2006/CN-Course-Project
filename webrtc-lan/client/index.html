@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LAN Meet Audio + Chat</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__left">
+      <span class="topbar__title">LAN Meet</span>
+      <span id="myId" class="topbar__id">Your ID: —</span>
+    </div>
+    <div class="topbar__right">
+      <span class="topbar__status">
+        <span id="statusBadge" class="badge badge--disconnected"></span>
+        <span id="statusText">Disconnected</span>
+      </span>
+      <span class="topbar__count">Participants: <strong id="participantCount">1</strong></span>
+      <span class="topbar__count">Active calls: <strong id="callCount">0</strong></span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel panel--stage">
+      <h2 class="panel__title">Meeting</h2>
+      <div id="participantsGrid" class="participants-grid"></div>
+    </section>
+
+    <aside class="panel panel--sidebar">
+      <h2 class="panel__title">Audio Controls</h2>
+
+      <div id="micError" class="mic-error hidden">
+        Microphone access denied. Allow microphone permission and reload.
+      </div>
+
+      <button id="muteBtn" class="btn btn--mute" disabled>Mute</button>
+
+      <div class="volume-wrap">
+        <span class="volume-label">Mic level</span>
+        <div class="volume-track">
+          <div id="volumeBar" class="volume-bar"></div>
+        </div>
+      </div>
+
+      <h2 class="panel__title panel__title--chat">Group Chat</h2>
+      <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+      <div class="chat-input-row">
+        <input
+          id="chatInput"
+          class="chat-input"
+          type="text"
+          placeholder="Send a message"
+          autocomplete="off"
+        />
+        <button id="sendBtn" class="btn btn--accent">Send</button>
+      </div>
+    </aside>
+  </main>
+
+  <div id="toastStack" class="toast-stack" aria-live="polite"></div>
+  <div id="audioElements" aria-hidden="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

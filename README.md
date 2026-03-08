@@ -1,4 +1,33 @@
-This is a peer-to-peer video transmission system that operates fully offline. When devices are connected to the same network, we transmit video, audio, and text using WebRTC.
+# WebRTC LAN P2P Prototype
 
-There will be a network or server where a client and the system will be connected to each other, enabling two or more devices to communicate with one another on the same server without an internet connection using WebRTC.
+This project is a peer-to-peer audio and text transmission system designed for offline LAN networks. It uses **WebRTC** for direct communication between devices and an **aiohttp** WebSocket signaling server.
 
+## Features
+- **P2P Audio:** Direct low-latency voice transmission.
+- **P2P Chat:** Real-time text messaging via WebRTC DataChannels.
+- **No Internet Required:** Works entirely on a local network (Wi-Fi/Ethernet).
+- **Modern UI:** Responsive dashboard built with Tailwind CSS.
+
+## Setup Instructions
+
+1. **Install Dependencies:**
+   ```bash
+   cd webrtc-lan/server
+   pip3 install -r requirements.txt --break-system-packages
+   ```
+
+2. **Start the Signaling Server:**
+   ```bash
+   python3 webrtc-lan/server/server.py
+   ```
+
+3. **Connect Devices:**
+   - Note the **LAN Access URL** displayed in the terminal (e.g., `http://192.168.1.10:3000`).
+   - Open this URL on two devices on the same network.
+   - Enter the same **Room ID** and click **Join**.
+
+## ⚠️ Browser Security (Microphone Access)
+Browsers require **HTTPS** or **localhost** for microphone access. To use this over LAN without HTTPS:
+1. Open Chrome/Edge and go to `chrome://flags/#unsafely-treat-insecure-origin-as-secure`.
+2. Add your server's IP (e.g., `http://192.168.1.10:5000`).
+3. Set it to **Enabled** and relaunch.
